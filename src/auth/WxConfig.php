@@ -64,7 +64,7 @@ class WxConfig {
             // 如果是企业号用以下 URL 获取 ticket
             $url = sprintf(WechatConfig::GET_JSAPI_TICKET_URL, $accessToken);
             $res = json_decode(Common::postCurl($url, 'GET'), true);
-            if($res != "null"  && array_key_exists("ticket",$res) && $res['ticket']){
+            if(json_encode($res) != "null"  && array_key_exists("ticket",$res) && $res['ticket']){
                 $ticket = $res['ticket'];
             }else{
                 return false;
@@ -88,7 +88,7 @@ class WxConfig {
             // 如果是企业号用以下URL获取access_token
             $url = sprintf(WechatConfig::GET_ACCESS_TOKEN_URL, $this->appid, $this->appSecret);
             $res = json_decode(Common::postCurl($url, 'GET'), true);
-            if($res != "null" && array_key_exists("access_token",$res) && $res['access_token']){
+            if(json_encode($res) != "null" && array_key_exists("access_token",$res) && $res['access_token']){
                 $access_token = $res['access_token'];
             }else{
                 return false;
