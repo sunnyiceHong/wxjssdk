@@ -11,5 +11,11 @@
     "require": {
         "php": ">=5.4"
     },
-    "license": "MIT"
+    "license": "MIT",
+    "autoload": {
+        "files":[],
+        "psr-4": {
+            "wechat\\config\\": "src"
+        }
+    },
 }
