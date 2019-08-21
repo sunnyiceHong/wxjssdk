@@ -2,6 +2,7 @@
     "name": "wxjs/config",
     "description": "\u0014\u0014\u0014\u0014js\u0014\u0014\u0014\u0014",
     "minimum-stability": "dev",
+    "type": "library",
     "authors": [
         {
             "name": "Sunny"
@@ -14,7 +15,9 @@
     "autoload": {
         "files":[],
         "psr-4": {
-            "wechat\\config\\": "src/"
+            "wechat\\config\\": "config",
+            "wechat\\auth\\": "src/auth",
+            "wechat\\pay\\": "src/pay"
         }
     }
 }
