@@ -1,6 +1,6 @@
 {
-    "name": "wxjssdk/create",
-    "description": "\u001b\u001bjssdk\u001b\u001b\u001b\u001b\u001b\u001b\u001b\u001b",
+    "name": "wxjs/config",
+    "description": "\u0014\u0014\u0014\u0014js\u0014\u0014\u0014\u0014",
     "type": "library",
     "minimum-stability": "dev",
     "authors": [
@@ -9,9 +9,6 @@
         }
     ],
     "require": {
-        "php": ">=5.4"
-    },
-    "require-dev": {
         "php": ">=5.4"
     }
 }
