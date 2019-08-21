@@ -1,2 +1,5 @@
 用于获取微信jssdk中的配置信息
-同时缓存access_tokenh额jsapi_ticket到本地
+同时缓存access_tokenh和jsapi_ticket到本地
+
+只需要使用getSignPackage方法即可获取配置信息
+如果前端没有传递url的情况会自动解析request中的url作为签名参数
