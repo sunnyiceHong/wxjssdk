@@ -1,0 +1,7 @@
+{
+    "name": "wxjssdk/create",
+    "description": "\u001b\u001bjssdk\u001b\u001b\u001b\u001b\u001b\u001b\u001b\u001b",
+    "type": "composer-plugin",
+    "minimum-stability": "dev",
+    "require": {}
+}
