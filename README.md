@@ -1,0 +1,2 @@
+用于获取微信jssdk中的配置信息
+同时缓存access_tokenh额jsapi_ticket到本地
