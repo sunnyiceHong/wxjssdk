@@ -1,12 +1,18 @@
 {
     "name": "wxjssdk/create",
     "description": "\u001b\u001bjssdk\u001b\u001b\u001b\u001b\u001b\u001b\u001b\u001b",
-    "type": "composer-plugin",
+    "type": "library",
     "minimum-stability": "dev",
     "authors": [
         {
             "name": "Sunny"
         }
-    ]
+    ],
+    "require": {
+        "php": ">=5.4"
+    },
+    "require-dev": {
+        "php": ">=5.4"
+    },
 
 }
