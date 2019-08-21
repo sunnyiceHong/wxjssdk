@@ -1,7 +1,6 @@
 {
     "name": "wxjs/config",
     "description": "\u0014\u0014\u0014\u0014js\u0014\u0014\u0014\u0014",
-    "type": "library",
     "minimum-stability": "dev",
     "authors": [
         {
@@ -17,8 +16,5 @@
         "psr-4": {
             "wechat\\config\\": "src/"
         }
-    },
-    "extra": {
-        "class": "Composer\\WxConfig"
     }
 }
