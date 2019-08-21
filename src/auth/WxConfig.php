@@ -13,7 +13,7 @@ use wechat\config\WechatConfig;
 use wechat\config\Common;
 
 class WxConfig {
-    private $appId;
+    private $appid;
     private $appSecret;
 
     public function __construct($appId, $appSecret) {
@@ -37,7 +37,7 @@ class WxConfig {
 
         $signature = sha1($string);
         $signPackage = array(
-            "appId"     => $this->appId,
+            "appId"     => $this->appid,
             "nonceStr"  => $nonceStr,
             "timestamp" => $timestamp,
             "url"       =>$url,
@@ -57,7 +57,6 @@ class WxConfig {
             // 如果是企业号用以下 URL 获取 ticket
             $url = sprintf(WechatConfig::GET_JSAPI_TICKET_URL, $accessToken);
             $res = json_decode(Common::postCurl($url, 'GET'), true);
-
             $ticket = $res['ticket'];
             if ($ticket) {
                 $data['expire_time'] = time() + (int)WechatConfig::EXPIRE_ACCESS_TOKEN;
@@ -73,7 +72,6 @@ class WxConfig {
 
     public function getAccessToken() {
         // access_token 应该全局存储与更新，以下代码以写入到文件中做示例
-//    $data = json_decode($this->get_php_file("data/file/access_token.php"));
         $data = Cache::get("accessToken");
         if (!$data || $data['expire_time'] < time()) {
 
@@ -81,10 +79,11 @@ class WxConfig {
             $url = sprintf(WechatConfig::GET_ACCESS_TOKEN_URL, $this->appid, $this->appSecret);
             $res = json_decode(Common::postCurl($url, 'GET'), true);
             $access_token = $res['access_token'];
+
+            echo $url;
             if ($access_token) {
                 $data['expire_time'] = time() + (int)WechatConfig::EXPIRE_ACCESS_TOKEN;
                 $data['access_token'] = $access_token;
-//        $this->set_php_file("../../access_token.php", json_encode($data));
                 Cache::set("accessToken",$data);
             }
         } else {
@@ -93,11 +92,5 @@ class WxConfig {
         return $access_token;
     }
 
-    private function get_php_file($filename) {
-        return trim(substr(file_get_contents($filename), 15));
-    }
-    private function set_php_file($filename, $content) {
-        file_put_contents($filename,"<?php exit();?>" . $content);
-    }
 }
 
