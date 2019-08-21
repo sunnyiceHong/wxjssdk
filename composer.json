@@ -15,7 +15,10 @@
     "autoload": {
         "files":[],
         "psr-4": {
-            "wechat\\config\\": "src"
+            "wechat\\config\\": "src/"
         }
+    },
+    "extra": {
+        "class": "Composer\\WxConfig"
     }
 }
