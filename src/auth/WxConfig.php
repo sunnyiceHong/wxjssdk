@@ -6,7 +6,7 @@
  * Desc:获取微信相关权限:access_token签名等
  */
 
-namespace wechat\config;
+namespace wechat\auth;
 
 use wechat\config\WechatConfig;
 
