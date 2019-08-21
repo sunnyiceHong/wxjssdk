@@ -24,6 +24,10 @@ class WxConfig {
     public function getSignPackage($url = NULL) {
         $jsapiTicket = $this->getJsApiTicket();
 
+        if($jsapiTicket === false){
+            return false;
+        }
+
         if(!$url){
             $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
             $url = "$protocol$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
@@ -42,7 +46,7 @@ class WxConfig {
             "timestamp" => $timestamp,
             "url"       =>$url,
             "signature" => $signature,
-            "rawString" => $string,
+            "rawString" => $string
         );
         return $signPackage;
     }
@@ -54,10 +58,17 @@ class WxConfig {
         $data = Cache::get("jsapiTicket");
         if (!$data || $data['expire_time'] < time()) {
             $accessToken = $this->getAccessToken();
+            if($accessToken === false){
+                return false;
+            }
             // 如果是企业号用以下 URL 获取 ticket
             $url = sprintf(WechatConfig::GET_JSAPI_TICKET_URL, $accessToken);
             $res = json_decode(Common::postCurl($url, 'GET'), true);
-            $ticket = $res['ticket'];
+            if(array_key_exists("ticket",$res) && $res['ticket']){
+                $ticket = $res['ticket'];
+            }else{
+                return false;
+            }
             if ($ticket) {
                 $data['expire_time'] = time() + (int)WechatConfig::EXPIRE_ACCESS_TOKEN;
                 $data['jsapi_ticket'] = $ticket;
@@ -74,13 +85,15 @@ class WxConfig {
         // access_token 应该全局存储与更新，以下代码以写入到文件中做示例
         $data = Cache::get("accessToken");
         if (!$data || $data['expire_time'] < time()) {
-
             // 如果是企业号用以下URL获取access_token
             $url = sprintf(WechatConfig::GET_ACCESS_TOKEN_URL, $this->appid, $this->appSecret);
             $res = json_decode(Common::postCurl($url, 'GET'), true);
-            $access_token = $res['access_token'];
+            if(array_key_exists("access_token",$res) && $res['access_token']){
+                $access_token = $res['access_token'];
+            }else{
+                return false;
+            }
 
-            echo $url;
             if ($access_token) {
                 $data['expire_time'] = time() + (int)WechatConfig::EXPIRE_ACCESS_TOKEN;
                 $data['access_token'] = $access_token;
