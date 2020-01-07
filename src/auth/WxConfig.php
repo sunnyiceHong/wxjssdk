@@ -70,11 +70,11 @@ class WxConfig {
 
 
 
-    public function getJsApiTicket() {
+    public function getJsApiTicket($reset=false) {
         // jsapi_ticket 应该全局存储与更新，以下代码以写入到文件中做示例
         $data = $this->wechatData;
         if (!$data || $data['jsapi_ticket_expire_time'] < time()) {
-            $accessToken = $this->getAccessToken();
+            $accessToken = $this->getAccessToken($reset);
             if($accessToken === false){
                 return false;
             }
@@ -84,6 +84,9 @@ class WxConfig {
             if(json_encode($res) != "null"  && array_key_exists("ticket",$res) && $res['ticket']){
                 $ticket = $res['ticket'];
             }else{
+                if(strpos($res['errmsg'],"invalid credential, access_token is invalid or not latest hints") === 0){
+                    $this->getJsApiTicket(true);
+                }
                 return false;
             }
             if ($ticket) {
@@ -98,16 +101,19 @@ class WxConfig {
         return $ticket;
     }
 
-    public function getAccessToken() {
+    public function getAccessToken($reset=false) {
         // access_token 应该全局存储与更新，以下代码以写入到文件中做示例
         $data = $this->wechatData;
-        if (!$data || $data['access_token_expire_time'] < time()) {
+        if (!$data || $data['access_token_expire_time'] < time() || $reset) {
             // 如果是企业号用以下URL获取access_token
             $url = sprintf(WechatConfig::GET_ACCESS_TOKEN_URL, $this->appid, $this->appSecret);
             $res = json_decode(Common::postCurl($url, 'GET'), true);
             if(json_encode($res) != "null" && array_key_exists("access_token",$res) && $res['access_token']){
                 $access_token = $res['access_token'];
             }else{
+                if(strpos($res['errmsg'],"invalid credential, access_token is invalid or not latest hints") === 0){
+                    $this->getAccessToken(true);
+                }
                 return false;
             }
 
